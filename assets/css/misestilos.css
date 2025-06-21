@@ -1,0 +1,223 @@
+body{
+    font-family: sans-serif;
+    background-color: #f3eeee;
+}
+
+/*----- Pagina Principal */
+
+/*Barra de navegacion*/
+.navbar, footer .row{
+    background-color: #ffb730;  
+}
+
+.navbar{
+    box-shadow: 1px 6px 8px 6px rgba(151, 149, 149, 0.20);
+}
+
+.logo{
+    color:#4a4a4a;
+}
+
+.activar:hover{
+    background-color: black;
+    color: white;
+    border-radius: 15px;
+}
+
+
+.img-search{
+    height: 20px;
+}
+
+.input-search{
+    border-radius: 30px;height: 30px;
+}
+
+.cant-carrito{
+    position: absolute;
+    background-color: rgb(0, 0, 0);
+    width:1rem;
+    height: 1rem;
+    border-radius: 50%;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top:0;
+    left: 5px;
+    font-size: 10px;
+    margin-left: 9px;
+}
+
+.nav-carrito{
+    position: relative;
+}
+
+/*---------------------PRINCIPAL*/
+
+/*Categorias*/
+.img-categoria{
+    height: 150px;
+    width: 200px;
+}
+
+/*Algunos productos*/
+.img-targeta{
+    height: 190px;
+    width: 190px;
+    object-fit: contain;
+}
+
+.sombra:hover{
+    box-shadow: 5px 5px 7px #b2b2b2;
+}
+
+.sombra{
+    height: 100%;
+}
+
+.img-novedades{
+  object-fit: contain;
+  height:200px;
+   width:200px;
+}
+
+.novedades-card{
+    border:3px solid #89d8fc;
+}
+
+/*-------CONTACTO*/
+.usuario-form{
+    box-shadow: 1px 6px 8px 6px rgba(151, 149, 149, 0.20);
+}
+
+.btn-usuario{
+    background-color: orangered;
+    border-radius:0%;
+    color:white;
+
+}
+
+.btn-usuario:hover{
+    background-color: orangered;
+    color:white;
+}
+
+.textarea-contacto{
+    height: 150px;
+}
+
+/*-------------------FOR;ULARIO DE REGISTRo*/
+.btn-usuario{
+    background-color: orangered;
+    border-radius:0%;
+    color:white;
+}
+
+.btn-usuario:hover{
+    background-color: orangered;
+    color:white;
+}
+
+/* ------------------QUIENES SOMOS */
+.img-integrante{
+    margin:0 auto; 
+    width:140px; 
+    height: 140px;
+    border-radius:50%;  
+}
+
+
+/*------------------CARRITo*/
+.trash-icon{
+width: 30px;
+height: 30px;
+}
+
+.table-cantidad{
+    width: 40px;
+    text-align: end;
+}
+
+.btn-carrito{
+    background-color: orangered;   
+   border-radius: 25px;
+   color: white;
+}
+
+.btn-carrito:hover{
+    background-color: orangered;
+    color:white;
+}
+
+
+/*---------------------PAGO*/
+.mensaje-modal{
+    text-align: center;
+}
+
+.icono-confirmar{
+    width: 115px;
+    height: 115px;
+}
+
+.icono-confirmado{
+    width: 150px;
+    height: 150px;
+}
+
+
+/*---------------COMERCIALIZACIO*/
+.img-paqueteria{
+    width: 130px; 
+    height: 60px; 
+    object-fit: contain;
+}
+
+.logo-pago{
+    width: 150px;
+    height: 70px;
+    object-fit: contain;
+}
+
+
+.redes-icon{
+    width: 25px;
+    height: 25px;
+}
+footer a, .nav-carrito a{
+   text-decoration: none;
+   color: black;
+}
+footer li{
+   list-style: none;
+}
+ 
+.image-detalle{
+    height: 350px;
+    width: 100%;
+    object-fit: contain;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
