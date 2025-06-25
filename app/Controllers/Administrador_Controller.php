@@ -17,9 +17,26 @@ class Administrador_Controller extends BaseController{
 
     public function gestionarUsuarios(){
         $usuario = new Usuario_Model();
-        $data['usuarios'] = $usuario->where('perfil_id', 2)->findAll();
+        $data['usuarios'] = $usuario->findAll();
         $data['titulo'] = 'Lista Usuarios';
+        $data['usuarios'] = $usuario
+       ->select('
+        usuarios.id_usuario,
+        usuarios.usuario_nombre,
+        usuarios.usuario_apellido,
+        usuarios.usuario_email,
+        usuarios.usuario_telefono,
+        usuarios.usuario_estado,
+        usuarios.perfil_id,
+        usuarios.usuario_direccion_id,
+        domicilios.id_domicilio,
+        CONCAT(provincias.provincia_desc, "/", localidades.localidad_desc) AS provincia_localidad')
+        ->join('domicilios', 'usuarios.usuario_direccion_id = domicilios.id_domicilio')
+        ->join('localidades', 'domicilios.localidad_id = localidades.id_localidad')
+        ->join('provincias', 'localidades.id_provincia = provincias.id_provincia')
+        ->findAll();
 
+    
         return view('Frontend/plantillas/head', $data).view('Frontend/plantillas/navbar_admin_view').view('Backend/Usuarios/listarUsuarios_view').view('Frontend/plantillas/footer_admin_view');
     }
 
@@ -46,7 +63,7 @@ class Administrador_Controller extends BaseController{
         $localidad_model = new Localidad_Model();
         $data['localidades'] = $localidad_model->join('provincias', 'provincias.id_provincia = localidades.id_provincia')->findAll();
 
-        $data['titulo'] = 'Mi Perfil';
+        $data['titulo'] = 'Editar';
 
         return view('Frontend/plantillas/head', $data).view('Frontend/plantillas/navbar_admin_view').view('Backend/Usuarios/formEditarUsuario_view').view('Frontend/plantillas/footer_admin_view');
     }
@@ -87,10 +104,10 @@ class Administrador_Controller extends BaseController{
                 'usuario_apellido' => $request->getPost('apellido'),
                 'usuario_email' => $correoUp,          
                 'usuario_telefono' => $request->getPost('telefono'), 
+                'perfil_id' => $request->getPost('perfil'), 
             ];
 
             $usuario->update($idUser, $data);
-            
             return redirect()->route('gestionar_usuarios');
         }
     }

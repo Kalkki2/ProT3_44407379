@@ -49,7 +49,7 @@
 
 
                     <div class="mt-3">
-                        <?php echo form_submit('enviar', 'Enviar', "class= 'btn btn-usuario mb-3 tn w-100'"); ?>
+                        <?php echo form_submit('enviar', 'Enviar', "class= 'btn btn-form btn-usuario'"); ?>
                     </div> 
                     
                 <?php echo form_close() ?>

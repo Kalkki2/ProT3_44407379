@@ -63,6 +63,27 @@
                                 </div>
                            </div>
                         </div>
+                        <div class="row">
+                           <div class="col-12 col-lg-6">
+                                <div class="form-group mb-4">
+                                    <label for="email" class="form-label">Seleccione rol</label>
+                                    <?php
+                                    $roles = [
+                                        '1' => 'Administrador',
+                                        '2' => 'Cliente'
+                                    ];
+                                    $rol_seleccionado = set_value('perfil', $usuario['perfil_id'] ?? '');
+
+                                   echo form_dropdown('perfil', $roles, $rol_seleccionado, 'class="form-control" id="rol_usuario"');
+                                    ?>
+
+                                    <?php if (isset($validation) && $validation->getError('perfil')): ?>
+                                        <div class="text-danger"><?= $validation->getError('perfil'); ?></div>
+                                    <?php endif; ?>
+                                </div>
+                           </div>
+                        </div>
+
                         <?php echo form_hidden('idUser', $usuario['id_usuario']); ?>
                         
                         <div class="row">

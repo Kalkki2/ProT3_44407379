@@ -11,7 +11,8 @@
                         <th scope="col">Correo</th>
                         <th scope="col">Direccion</th>
                         <th scope="col">Telefono</th>
-                        <th scope="col">Editar</th>
+                        <th scope="col">Perfil</th>
+                        <th scope="col">Editar</th>                         
                         <th scope="col">Agregar/Eliminar</th>
                     </tr>
                 </thead>
@@ -22,8 +23,9 @@
                             <td><?php echo $unUsuario['usuario_nombre'];?></td>
                             <td><?php echo $unUsuario['usuario_apellido'];?></td>
                             <td><?php echo $unUsuario['usuario_email'];?></td>
-                            <td><?php echo $unUsuario['usuario_direccion_id'];?></td>
+                            <td><?php echo $unUsuario['provincia_localidad'];?></td>
                             <td><?php echo $unUsuario['usuario_telefono'];?></td>
+                            <td><?= ($unUsuario['perfil_id'] == 1) ? 'Administrador' : 'Cliente' ?></td>
                             <td>
                                 <a class="btn btn-outline-dark px-3 bg-light text-dark" href="<?php echo base_url('form_editar_usuario'.$unUsuario['id_usuario']);?>"><img class="me-2" src="assets/img/icons/pencil-fill.svg" alt="">Modificar</a>
                             </td>
@@ -39,8 +41,6 @@
                             <?php } ?>
                         </tr>
 
-                    
-                    
                     <?php }?>
 
                     
