@@ -10,30 +10,24 @@ class Usuario_Controller extends BaseController{
         helper(['form','url']);
     }
 
-    public function mostrarFormRegistrarse(){
+    public function mostrarFormRegistro(){
         $localidad_model = new Localidad_Model();
-        $data['localidades'] = $localidad_model->join('provincias', 'provincias.id_provincia = localidades.id_provincia')->findAll();
-
         $data['titulo']='Registrarse';
-        return view('plantillas/head', $data).view('plantillas/navbar').view('contenido/registro_usuario_view').view('plantillas/footer');   
+        $data['localidades'] = $localidad_model->join('provincias', 'provincias.id_provincia = localidades.id_provincia')->findAll();
+   
+        return view('Frontend/plantillas/head', $data).view('Frontend/plantillas/navbar').view('Backend/Usuarios/registro_usuario_view').view('Frontend/plantillas/footer');   
     }
-
-    
-    public function mostrarLogin(){
+   
+    public function mostrarFormLogin(){
         $data['titulo']='Login';
 
-        return view('plantillas/head', $data).view('plantillas/navbar').view('contenido/login_view').view('plantillas/footer');
+        return view('Frontend/plantillas/head', $data).view('Frontend/plantillas/navbar').view('Backend/Usuarios/login_view').view('Frontend/plantillas/footer');
     }
 
-
-
-
-
-
-    public function formVali(){
+    public function validarYAgregarUsuario(){
         $request = \Config\Services::request();
         $localidad_model = new Localidad_Model();
-         $usuario_model = new Usuario_Model();
+        $usuario_model = new Usuario_Model();
 
         $reglas = [
             'nombre' => 'required|min_length[5]|max_length[35]',
@@ -43,8 +37,7 @@ class Usuario_Controller extends BaseController{
             'telefono' => 'required|min_length[10]|max_length[10]|numeric',
             'localidad' => 'is_not_unique[localidades.id_localidad]',
             'password' => 'required|min_length[8]|max_length[8]',
-            'password2' => 'required|min_length[8]|matches[password]',
-            
+            'password2' => 'required|min_length[8]|matches[password]', 
         ];
 
         $input = $this->validate($reglas);  
@@ -54,7 +47,7 @@ class Usuario_Controller extends BaseController{
             $data['localidades'] = $localidad_model->join('provincias', 'provincias.id_provincia = localidades.id_provincia')->findAll();
             $data['validation'] = $this->validator;
 
-            return view('plantillas/head', $data).view('plantillas/navbar').view('contenido/registro_usuario_view').view('plantillas/footer');
+            return view('Frontend/plantillas/head', $data).view('Frontend/plantillas/navbar').view('Backend/Usuarios/registro_usuario_view').view('Frontend/plantillas/footer');   
         }else{
             $domicilio_model = new Domicilio_Model();
             $idProvincia = $localidad_model->select('id_provincia')->where('id_localidad', $request->getPost('localidad'))->first();
@@ -81,68 +74,66 @@ class Usuario_Controller extends BaseController{
 
            $usuario_model->insert($data_usuario);
             return redirect()->route('login')->with('mensaje', 'Se registro con exito!');
-
         }
-
-
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-    
-    public function buscar_usuario(){
-        $validation = \Config\Services::validation();
+    public function iniciarSesion(){
         $request = \Config\Services::request();
         $session = session();
 
-   
-        $reglas = [
+        $reglas= [
             'email' => 'required|valid_email',
             'password' => 'required|min_length[8]',
         ];
-           
-        $input = $this->validate($reglas);  
-
-        if(!$input){
+         
+        $input = $this->validate($reglas);
+        if(!$input ){
             $data['titulo'] = 'Login';
             $data['validation'] = $this->validator;
         
-            return view('plantillas/head', $data).view('plantillas/navbar').view('contenido/login_view').view('plantillas/footer');
+            return view('Frontend/plantillas/head', $data).view('Frontend/plantillas/navbar').view('Backend/Usuarios/login_view').view('Frontend/plantillas/footer');
         }
 
-        $loginCorreo = $request->getPost('email');
-        $loginContrasenia = $request->getPost('password');
+        $loginEmail = $request->getPost('email');
+        $loginPassword = $request->getPost('password');
 
-        $user_model = new Usuario_Model();
-        $user = $user_model->where('usuario_email', $loginCorreo)->first();
+        $usuarioModel = new Usuario_Model();
+        $user = $usuarioModel->where('usuario_email', $loginEmail)->first();
 
-        if( $user && password_verify($loginContrasenia, $user['usuario_password'])){
-           
-          return redirect()->route('/');
+        if( $user && password_verify($loginPassword, $user['usuario_password'])){
+            $data = [
+                //Fecha de inscripcion
+                'id' => $user['id_usuario'],
+                'nombre' => $user['usuario_nombre'],
+                'apellido' => $user['usuario_apellido'],
+                'perfil' => $user['perfil_id'],
+                'estado' => $user['usuario_estado'],
+                'login' => TRUE
+            ];
+
+            $session->set($data);
+
+            switch ($user['perfil_id']) {
+                case '1':
+                    return redirect()->route('usuario_admin');
+                break;
+                
+                case '2':
+                    return redirect()->route('/');
+                break;
+            }
             
         }else{
             return redirect()->route('login')->with('mensaje', 'Usuario y/o Contraseña incorrecto');
         }
     }
-    
 
-
-
-
-
-
-
-
+    public function cerrarSesion(){
+        $session = session();
+        $session->destroy();
+        return redirect()->route('login');
+    } 
 
 
 }
